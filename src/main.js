@@ -35,6 +35,15 @@ window.onload = async () => {
     }
     console.log('User DID:', userDid.did);
 
+    function logError(error) {
+        // Send error to a logging service
+        console.error(error);
+    }
+
+    window.addEventListener('error', (event) => {
+        logError(event.error);
+    });
+
     // Map initialization
     map = L.map(mapDiv).setView([0, 0], 2);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
