@@ -21,12 +21,23 @@ window.onload = async () => {
 
     // DID initialization
     const did = new DIDCore.DID();
+    const keyPair = await window.crypto.subtle.generateKey(
+        {
+            name: "ECDSA",
+            namedCurve: "P-256"
+        },
+        true,
+        ["sign", "verify"]
+    );
     const storedDid = localStorage.getItem('userDid');
     if (storedDid) {
         userDid = await did.fromJSON(JSON.parse(storedDid));
     } else {
-        userDid = await did.generate();
+        const publicKeyJwk = await window.crypto.subtle.exportKey("jwk", keyPair.publicKey);
+        const privateKeyJwk = await window.crypto.subtle.exportKey("jwk", keyPair.privateKey);
+        userDid = await did.generate('key', { publicKeyJwk: publicKeyJwk });
         localStorage.setItem('userDid', JSON.stringify(userDid.toJSON()));
+        localStorage.setItem('privateKey', JSON.stringify(privateKeyJwk));
     }
     console.log('User DID:', userDid.id);
 
@@ -49,12 +60,17 @@ window.onload = async () => {
         }
     });
 
-    arButton.addEventListener('click', () => {
+    arButton.addEventListener('click', async () => {
         if (scene.is('vr-mode')) {
             scene.exitVR();
             mapContainer.style.zIndex = -1;
         } else {
-            scene.enterVR();
+            const session = await navigator.xr.requestSession('immersive-ar', {
+                requiredFeatures: ['hit-test', 'local-floor'],
+                optionalFeatures: ['dom-overlay', 'unbounded'],
+                domOverlay: { root: document.querySelector('#overlay') }
+            });
+            scene.xrSession = session;
             mapContainer.style.zIndex = 10;
         }
     });

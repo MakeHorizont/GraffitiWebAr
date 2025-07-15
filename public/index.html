@@ -26,7 +26,9 @@
     </style>
   </head>
   <body>
-    <a-scene embedded arjs='sourceType: webcam; trackingMethod: best; debugUIEnabled: false;'>
+    <a-scene webxr="requiredFeatures: hit-test,local-floor;
+                      optionalFeatures: dom-overlay,unbounded;
+                      overlayElement: #overlay;">
         <a-assets>
             <img id="image-marker" src="models/marker.png">
         </a-assets>
@@ -47,6 +49,13 @@
         <h2>Friends</h2>
         <input type="text" id="friend-did-input" placeholder="Friend's DID" />
         <button id="add-friend-button">Add Friend</button>
+    </div>
+    <div id="moderation-container">
+        <h2>Moderation</h2>
+        <input type="text" id="proposal-description-input" placeholder="Proposal description" />
+        <button id="create-proposal-button">Create Proposal</button>
+        <input type="number" id="proposal-id-input" placeholder="Proposal ID" />
+        <button id="vote-button">Vote</button>
     </div>
     <div id="ui">
         <button id="ar-button">Enter AR</button>
