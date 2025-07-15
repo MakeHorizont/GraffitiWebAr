@@ -77,6 +77,20 @@
 
 Этот проект распространяется под лицензией MIT.
 
+## Тестирование в Android Studio
+
+1.  **Установите Android Studio:** [https://developer.android.com/studio](https://developer.android.com/studio)
+2.  **Откройте проект:**
+    *   Запустите Android Studio.
+    *   Выберите "Open an existing Android Studio project".
+    *   Выберите папку с проектом.
+3.  **Настройте эмулятор:**
+    *   Откройте AVD Manager.
+    *   Создайте новый виртуальный устройство (например, Pixel 4).
+    *   Запустите эмулятор.
+4.  **Запустите приложение:**
+    *   Нажмите кнопку "Run".
+
 ## Контакты
 
 Вы можете связаться с нами через [GitHub Issues](https://github.com/your-username/vestigium/issues).
