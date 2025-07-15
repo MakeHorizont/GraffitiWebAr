@@ -20,26 +20,20 @@ window.onload = async () => {
     let userMarker;
 
     // DID initialization
-    const did = new DIDCore.DID();
-    const keyPair = await window.crypto.subtle.generateKey(
-        {
-            name: "ECDSA",
-            namedCurve: "P-256"
-        },
-        true,
-        ["sign", "verify"]
-    );
+    const { DidKey } = DidKeyWebCrypto;
+    const didKey = new DidKey();
     const storedDid = localStorage.getItem('userDid');
     if (storedDid) {
-        userDid = await did.fromJSON(JSON.parse(storedDid));
+        userDid = await didKey.fromDid(storedDid);
     } else {
-        const publicKeyJwk = await window.crypto.subtle.exportKey("jwk", keyPair.publicKey);
-        const privateKeyJwk = await window.crypto.subtle.exportKey("jwk", keyPair.privateKey);
-        userDid = await did.generate('key', { publicKeyJwk: publicKeyJwk });
-        localStorage.setItem('userDid', JSON.stringify(userDid.toJSON()));
-        localStorage.setItem('privateKey', JSON.stringify(privateKeyJwk));
+        userDid = await didKey.generate();
+        localStorage.setItem('userDid', userDid.did);
+        localStorage.setItem('privateKey', JSON.stringify(await userDid.export({
+            type: 'JsonWebKey2020',
+            privateKey: true
+        })));
     }
-    console.log('User DID:', userDid.id);
+    console.log('User DID:', userDid.did);
 
     // Map initialization
     map = L.map(mapDiv).setView([0, 0], 2);
@@ -88,9 +82,40 @@ window.onload = async () => {
         if (fileContent && currentPosition) {
             const visibility = visibilitySelect.value;
             let encryptedContent = fileContent;
-            if (visibility === 'private' || visibility === 'friends') {
-                // Placeholder for encryption
-                encryptedContent = fileContent;
+            if (visibility === 'private') {
+                const privateKey = JSON.parse(localStorage.getItem('privateKey'));
+                const key = await window.crypto.subtle.importKey(
+                    "jwk",
+                    privateKey,
+                    {
+                        name: "ECDH",
+                        namedCurve: "P-256"
+                    },
+                    true,
+                    ["deriveKey"]
+                );
+                const derivedKey = await window.crypto.subtle.deriveKey(
+                    {
+                        name: "ECDH",
+                        public: key.publicKey
+                    },
+                    key,
+                    {
+                        name: "AES-GCM",
+                        length: 256
+                    },
+                    true,
+                    ["encrypt", "decrypt"]
+                );
+                const iv = window.crypto.getRandomValues(new Uint8Array(12));
+                encryptedContent = await window.crypto.subtle.encrypt(
+                    {
+                        name: "AES-GCM",
+                        iv: iv
+                    },
+                    derivedKey,
+                    fileContent
+                );
             }
 
             const result = await ipfs.add(encryptedContent);
@@ -187,11 +212,13 @@ window.onload = async () => {
     };
 
     scene.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        previousMousePosition = {
-            x: e.clientX,
-            y: e.clientY
-        };
+        if (e.target.tagName === 'A-SCENE') {
+            isDragging = true;
+            previousMousePosition = {
+                x: e.clientX,
+                y: e.clientY
+            };
+        }
     });
 
     scene.addEventListener('mousemove', (e) => {
