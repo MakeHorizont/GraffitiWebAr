@@ -99,6 +99,7 @@ window.onload = async () => {
             entity.setAttribute('position', objectData.position);
             entity.setAttribute('scale', objectData.scale);
             entity.setAttribute('rotation', objectData.rotation);
+            entity.setAttribute('animation-mixer', '');
             markerEntity.appendChild(entity);
 
             entity.addEventListener('click', () => {
@@ -145,6 +146,7 @@ window.onload = async () => {
                     entity.setAttribute('position', objectData.position);
                     entity.setAttribute('scale', objectData.scale);
                     entity.setAttribute('rotation', objectData.rotation);
+                    entity.setAttribute('animation-mixer', '');
                     markerEntity.appendChild(entity);
 
                     entity.addEventListener('click', () => {
