@@ -4,7 +4,8 @@
   "description": "Decentralized AR platform",
   "main": "src/main.js",
   "scripts": {
-    "start": "npx http-server ."
+    "start": "npx http-server .",
+    "build": "mkdir -p build && cp -r public/* build/"
   },
   "keywords": [
     "AR",
