@@ -138,12 +138,12 @@ window.onload = async () => {
         friendsDb = await orbitdb.keyvalue('friends-db');
     }
 
-    const all = db.all;
-    for (const key in all) {
-        const objectData = all[key];
-        if (currentPosition && objectData.latitude && objectData.longitude) {
-            const distance = getDistance(currentPosition.latitude, currentPosition.longitude, objectData.latitude, objectData.longitude);
-            if (distance < 50) { // Only show objects within 50 meters
+    map.on('moveend', async () => {
+        const bounds = map.getBounds();
+        const all = await db.all();
+        for (const key in all) {
+            const objectData = all[key];
+            if (objectData.latitude && objectData.longitude && bounds.contains([objectData.latitude, objectData.longitude])) {
                 let showObject = false;
                 if (objectData.visibility === 'public') {
                     showObject = true;
@@ -178,7 +178,7 @@ window.onload = async () => {
                 }
             }
         }
-    }
+    });
 
     let isDragging = false;
     let previousMousePosition = {
