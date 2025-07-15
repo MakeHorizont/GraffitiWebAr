@@ -29,8 +29,8 @@
   ],
   "buffers": [
     {
-      "uri": "data:application/octet-stream;base64,AAABAAIAAAAAAAAAAAAAAAAAAAAAAIA/AAAAAAAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAAAA=",
-      "byteLength": 48
+      "uri": "data:application/octet-stream;base64,AAABAAIAAAAAAAAAAAAAAAAAAAAAAIA/AAAAAAAAAAAAAAAAAACAPwAAAAA=",
+      "byteLength": 32
     }
   ],
   "bufferViews": [
@@ -43,7 +43,7 @@
     {
       "buffer": 0,
       "byteOffset": 8,
-      "byteLength": 36,
+      "byteLength": 24,
       "target": 34962
     }
   ],
@@ -57,7 +57,7 @@
     {
       "bufferView": 1,
       "componentType": 5126,
-      "count": 3,
+      "count": 2,
       "type": "VEC3"
     }
   ]

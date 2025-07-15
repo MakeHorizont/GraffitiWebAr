@@ -7,14 +7,45 @@
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/ipfs/dist/index.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/orbit-db/dist/orbitdb.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@ceramicnetwork/did-core/dist/did-core.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    <style>
+        #map-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
   </head>
   <body>
-    <a-scene embedded arjs>
-      <a-marker-camera preset="hiro"></a-marker-camera>
+    <a-scene embedded arjs='sourceType: webcam; trackingMethod: best; debugUIEnabled: false;'>
+        <a-assets>
+            <img id="image-marker" src="models/marker.png">
+        </a-assets>
+        <a-marker type='pattern' url='models/marker.patt'>
+            <a-entity id="marker-entity"></a-entity>
+        </a-marker>
+        <a-entity camera></a-entity>
     </a-scene>
+    <div id="map-container">
+        <div id="map"></div>
+    </div>
     <div id="ui">
         <button id="ar-button">Enter AR</button>
         <input type="file" id="file-input" />
+        <select id="visibility-select">
+            <option value="public">Public</option>
+            <option value="private">Private</option>
+            <option value="friends">Friends</option>
+        </select>
         <button id="save-button">Save</button>
     </div>
     <script src="../src/main.js"></script>
