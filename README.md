@@ -93,7 +93,7 @@
 
 *   **Клонируйте репозиторий:**
     ```bash
-    git clone https://github.com/your-username/vestigium.git
+    git clone https://github.com/MakeHorizont/GraffitiWebAr.git
     ```
 *   **Откройте проект в Android Studio:**
     *   Запустите Android Studio.
