@@ -129,6 +129,7 @@ window.onload = async () => {
 
             const result = await ipfs.add(encryptedContent);
             const cid = result.cid.toString();
+                await ipfs.pin.add(cid);
 
             const objectData = {
                 cid: cid,
