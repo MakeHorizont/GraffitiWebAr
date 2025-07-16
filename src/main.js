@@ -70,30 +70,37 @@ window.onload = async () => {
             scene.exitVR();
             mapContainer.style.zIndex = -1;
         } else {
-            const session = await navigator.xr.requestSession('immersive-ar', {
-                requiredFeatures: ['hit-test', 'local-floor', 'depth-sensing'],
-                optionalFeatures: ['dom-overlay', 'unbounded'],
-                domOverlay: { root: document.querySelector('#overlay') },
-                depthSensing: {
-                    usagePreference: ["cpu-optimized", "gpu-optimized"],
-                    dataFormatPreference: ["luminance-alpha", "float32"],
-                },
-            });
-            scene.xrSession = session;
-            mapContainer.style.zIndex = 10;
+            try {
+                const session = await navigator.xr.requestSession('immersive-ar', {
+                    requiredFeatures: ['hit-test', 'local-floor', 'depth-sensing'],
+                    optionalFeatures: ['dom-overlay', 'unbounded'],
+                    domOverlay: { root: document.querySelector('#overlay') },
+                    depthSensing: {
+                        usagePreference: ["cpu-optimized", "gpu-optimized"],
+                        dataFormatPreference: ["luminance-alpha", "float32"],
+                    },
+                });
+                scene.xrSession = session;
+                mapContainer.style.zIndex = 10;
+            } catch (e) {
+                console.error('Failed to create AR session', e);
+                // Fallback to a non-AR mode or show an error message
+            }
         }
     });
 
     function createVisualAnchor(imageData) {
-        const mat = cv.matFromImageData(imageData);
-        const orb = new cv.ORB();
-        const keyPoints = new cv.KeyPointVector();
-        const descriptors = new cv.Mat();
-        orb.detectAndCompute(mat, new cv.Mat(), keyPoints, descriptors);
-        return {
-            keyPoints: keyPoints.get(0),
-            descriptors: descriptors.data64F
-        };
+        return new Promise((resolve) => {
+            const mat = cv.matFromImageData(imageData);
+            const orb = new cv.ORB();
+            const keyPoints = new cv.KeyPointVector();
+            const descriptors = new cv.Mat();
+            orb.detectAndCompute(mat, new cv.Mat(), keyPoints, descriptors);
+            resolve({
+                keyPoints: keyPoints.get(0),
+                descriptors: descriptors.data64F
+            });
+        });
     }
 
     fileInput.addEventListener('change', (event) => {
