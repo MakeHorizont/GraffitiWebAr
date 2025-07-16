@@ -63,20 +63,38 @@ window.onload = async () => {
         }
     });
 
+    const cv = require('opencv.js');
+
     arButton.addEventListener('click', async () => {
         if (scene.is('vr-mode')) {
             scene.exitVR();
             mapContainer.style.zIndex = -1;
         } else {
             const session = await navigator.xr.requestSession('immersive-ar', {
-                requiredFeatures: ['hit-test', 'local-floor'],
+                requiredFeatures: ['hit-test', 'local-floor', 'depth-sensing'],
                 optionalFeatures: ['dom-overlay', 'unbounded'],
-                domOverlay: { root: document.querySelector('#overlay') }
+                domOverlay: { root: document.querySelector('#overlay') },
+                depthSensing: {
+                    usagePreference: ["cpu-optimized", "gpu-optimized"],
+                    dataFormatPreference: ["luminance-alpha", "float32"],
+                },
             });
             scene.xrSession = session;
             mapContainer.style.zIndex = 10;
         }
     });
+
+    function createVisualAnchor(imageData) {
+        const mat = cv.matFromImageData(imageData);
+        const orb = new cv.ORB();
+        const keyPoints = new cv.KeyPointVector();
+        const descriptors = new cv.Mat();
+        orb.detectAndCompute(mat, new cv.Mat(), keyPoints, descriptors);
+        return {
+            keyPoints: keyPoints.get(0),
+            descriptors: descriptors.data64F
+        };
+    }
 
     fileInput.addEventListener('change', (event) => {
         const file = event.target.files[0];
