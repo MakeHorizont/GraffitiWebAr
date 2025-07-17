@@ -85,11 +85,7 @@
 
 *   **Запустите локальный сервер:**
     ```bash
-vestigium-mvp
     npm start
-=======
-    git clone https://github.com/MakeHorizont/GraffitiWebAr.git
-main
     ```
 *   **Проверьте доступность сервера:**
     *   Убедитесь, что ваш компьютер и Android-устройство находятся в одной Wi-Fi сети.
