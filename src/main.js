@@ -7,6 +7,12 @@ window.onload = async () => {
     const markerEntity = document.getElementById('marker-entity');
     const mapContainer = document.getElementById('map-container');
     const mapDiv = document.getElementById('map');
+    const accountButton = document.getElementById('account-button');
+    const accountCreationContainer = document.getElementById('account-creation-container');
+    const guestModeButton = document.getElementById('guest-mode-button');
+    const createAccountFileButton = document.getElementById('create-account-file-button');
+    const loginFileInput = document.getElementById('login-file-input');
+    const loginFileButton = document.getElementById('login-file-button');
 
     let ipfs;
     let orbitdb;
