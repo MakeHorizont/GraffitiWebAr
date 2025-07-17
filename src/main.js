@@ -50,6 +50,20 @@ window.onload = async () => {
         logError(event.error);
     });
 
+    function trackPerformance() {
+        const performance = window.performance;
+        if (performance) {
+            const metrics = {
+                fps: 0, // Calculate FPS
+                memory: performance.memory.usedJSHeapSize,
+                cpu: 0 // Cannot be measured directly
+            };
+            // Send metrics to a logging service
+        }
+    }
+
+    setInterval(trackPerformance, 5000);
+
     // Map initialization
     map = L.map(mapDiv).setView([0, 0], 2);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
