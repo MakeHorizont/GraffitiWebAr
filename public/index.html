@@ -1,117 +1,100 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <title>След / Vestigium / 迹 (Jì)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="style.css">
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/ipfs/dist/index.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/orbit-db/dist/orbitdb.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@ceramicnetwork/did-core/dist/did-core.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
-    <style>
-        body {
-            margin: 0;
-            font-family: sans-serif;
-        }
-        #main-menu {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.5);
-        }
-        #main-menu button {
-            margin: 10px;
-            padding: 10px 20px;
-            font-size: 1.2em;
-            cursor: pointer;
-        }
-        #map-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-        #map {
-            width: 100%;
-            height: 100%;
-        }
-    </style>
-  </head>
-  <body>
-    <div id="main-menu">
-        <div id="logo-container"></div>
-        <div id="account-creation-container" style="display: none;">
-            <button id="guest-mode-button">Гостевой режим</button>
-            <button id="create-account-file-button">Создать аккаунт (файл-ключ)</button>
-            <input type="file" id="login-file-input" style="display: none;" />
-            <button id="login-file-button">Войти по файлу</button>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</head>
+<body>
+    <div id="app-container">
+        <!-- Main Menu -->
+        <div id="main-menu">
+            <h1>След / Vestigium / 迹 (Jì)</h1>
+            <div id="account-creation-container">
+                <button id="guest-mode-button">Гостевой режим</button>
+                <button id="create-account-file-button">Создать аккаунт (файл-ключ)</button>
+                <input type="file" id="login-file-input" style="display: none;" />
+                <button id="login-file-button">Войти по файлу</button>
+            </div>
+            <button id="start-button" disabled>Старт</button>
+            <button id="account-button">Создание аккаунта</button>
+            <button id="settings-button">Настройки</button>
+            <button id="instructions-button">Инструкции</button>
+            <button id="projects-button">Ссылки на проекты</button>
+            <button id="vr-button">VR</button>
         </div>
-        <button id="start-button" disabled>Старт</button>
-        <button id="account-button">Создание аккаунта</button>
-        <button id="settings-button">Настройки</button>
-        <button id="instructions-button">Инструкции</button>
-        <button id="projects-button">Ссылки на проекты</button>
+
+        <!-- AR Instructions -->
+        <div id="ar-instructions">
+            <p>Chrome мешает использованию камеры. Нужно несколько раз запретить разрешение на камеру, а затем сверху слева от ссылки включить разрешение на камеру.</p>
+            <button id="close-instructions-button">Понятно</button>
+        </div>
+
+        <!-- AR Container -->
+        <div id="ar-container">
+            <a-scene webxr="requiredFeatures: hit-test,local-floor; optionalFeatures: dom-overlay,unbounded; overlayElement: #overlay;">
+                <a-assets>
+                    <img id="image-marker" src="models/marker.png">
+                </a-assets>
+                <a-marker type='pattern' url='models/marker.patt'>
+                    <a-entity id="marker-entity"></a-entity>
+                </a-marker>
+                <a-entity camera></a-entity>
+            </a-scene>
+        </div>
+
+        <!-- AR UI -->
+        <div id="ar-ui">
+            <button id="ar-menu-button">Меню</button>
+            <button id="ar-photo-button">Фотографировать место</button>
+            <button id="ar-select-object-button">Выбор объекта</button>
+            <div id="ar-object-menu" style="display: none;">
+                <button data-type="text">Текст</button>
+                <button data-type="image">Изображение</button>
+                <button data-type="video">Видео</button>
+                <button data-type="model">3D-модель</button>
+                <button data-type="animated-model">Анимированная 3D-модель</button>
+                <input type="file" id="ar-audio-input" accept="audio/*" />
+            </div>
+        </div>
+
+        <!-- Map Container -->
+        <div id="map-container">
+            <div id="map"></div>
+        </div>
     </div>
-    <div id="ar-instructions" style="display: none;">
-        <p>Chrome мешает использованию камеры. Нужно несколько раз запретить разрешение на камеру, а затем сверху слева от ссылки включить разрешение на камеру.</p>
-        <button id="close-instructions-button">Понятно</button>
-    </div>
-    <div id="ar-container" style="display: none;">
-        <a-scene webxr="requiredFeatures: hit-test,local-floor;
-                          optionalFeatures: dom-overlay,unbounded;
-                          overlayElement: #overlay;">
-            <a-assets>
-                <img id="image-marker" src="models/marker.png">
-            </a-assets>
-            <a-marker type='pattern' url='models/marker.patt'>
-                <a-entity id="marker-entity"></a-entity>
-            </a-marker>
-            <a-entity camera></a-entity>
-        </a-scene>
-    </div>
-    <div id="map-container">
-        <div id="map"></div>
-    </div>
-    <div id="profile-container">
+
+    <!-- Other UI elements that might be needed -->
+    <div id="profile-container" style="display: none;">
         <h2>Profile</h2>
         <input type="text" id="username-input" placeholder="Username" />
         <button id="save-profile-button">Save Profile</button>
     </div>
-    <div id="friends-container">
+    <div id="friends-container" style="display: none;">
         <h2>Friends</h2>
         <input type="text" id="friend-did-input" placeholder="Friend's DID" />
         <button id="add-friend-button">Add Friend</button>
     </div>
-    <div id="feedback-container">
+    <div id="feedback-container" style="display: none;">
         <h2>Feedback</h2>
         <textarea id="feedback-input" placeholder="Your feedback"></textarea>
         <button id="submit-feedback-button">Submit Feedback</button>
     </div>
-    <div id="moderation-container">
+    <div id="moderation-container" style="display: none;">
         <h2>Moderation</h2>
         <div id="proposals-list"></div>
         <input type="text" id="proposal-description-input" placeholder="Proposal description" />
         <button id="create-proposal-button">Create Proposal</button>
     </div>
-    <div id="ar-ui" style="display: none;">
-        <button id="ar-menu-button">Меню</button>
-        <button id="ar-photo-button">Фотографировать место</button>
-        <button id="ar-select-object-button">Выбор объекта</button>
-        <div id="ar-object-menu" style="display: none;">
-            <button data-type="text">Текст</button>
-            <button data-type="image">Изображение</button>
-            <button data-type="video">Видео</button>
-            <button data-type="model">3D-модель</button>
-            <button data-type="animated-model">Анимированная 3D-модель</button>
-            <input type="file" id="ar-audio-input" accept="audio/*" />
-        </div>
-    </div>
-    <script src="../src/main.js"></script>
-  </body>
+
+    <script type="module" src="../src/main.js"></script>
+</body>
 </html>
