@@ -29,7 +29,54 @@
             <button id="settings-button">Настройки</button>
             <button id="instructions-button">Инструкции</button>
             <button id="projects-button">Ссылки на проекты</button>
-            <button id="vr-button">VR</button>
+            <button id="vr-button" disabled>VR</button>
+        </div>
+
+        <!-- Account Modal -->
+        <div id="account-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2>Создание аккаунта</h2>
+                <button id="guest-mode-button-modal">Гостевой режим / Временный аккаунт</button>
+                <p>Вы вошли как гость (DID: <span id="guest-did"></span>)</p>
+                <button id="remember-me-button">Запомнить меня</button>
+                <hr>
+                <h3>Вход / Создание через файл-ключ</h3>
+                <button id="create-key-file-button">Скачать файл-ключ</button>
+                <button id="upload-key-file-button">Загрузить файл-ключ</button>
+                <hr>
+                <h3>Другие способы входа</h3>
+                <button disabled>Вход через почту (в разработке)</button>
+                <button disabled>Вход через соцсети (в разработке)</button>
+            </div>
+        </div>
+
+        <!-- Settings Modal -->
+        <div id="settings-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2>Настройки</h2>
+                <label for="language-select">Язык:</label>
+                <select id="language-select">
+                    <option>Русский</option>
+                </select>
+                <br>
+                <label for="ar-quality-select">Качество AR:</label>
+                <select id="ar-quality-select">
+                    <option>Среднее</option>
+                </select>
+                <br>
+                <button id="save-settings-button">Сохранить</button>
+                <button id="cancel-settings-button">Отмена</button>
+            </div>
+        </div>
+
+        <!-- Instructions Modal -->
+        <div id="instructions-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <div id="instructions-content"></div>
+            </div>
         </div>
 
         <!-- AR Instructions -->

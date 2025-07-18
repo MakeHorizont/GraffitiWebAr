@@ -23,6 +23,7 @@
     "aframe": "^0.1.3",
     "ar.js": "^2.2.2",
     "opencv.js": "^1.2.1",
+    "showdown": "^2.1.0",
     "three": "^0.140.0"
   },
   "devDependencies": {
