@@ -1,0 +1,179 @@
+/* General Body Styles */
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    overscroll-behavior: none;
+}
+
+/* Main Container */
+#app-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Main Menu */
+#main-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 10;
+    transition: opacity 0.5s ease-in-out;
+}
+
+#main-menu h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+#main-menu button {
+    margin: 10px;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    border-radius: 8px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+#main-menu button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+#main-menu button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* Account Creation */
+#account-creation-container {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+}
+
+/* AR Container */
+#ar-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    z-index: 1;
+}
+
+/* AR UI */
+#ar-ui {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+    z-index: 20;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+#ar-ui button {
+    margin: 0 5px;
+    padding: 10px 15px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#ar-object-menu {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 10px;
+    padding: 10px;
+    display: none;
+}
+
+#ar-object-menu button {
+    display: block;
+    margin: 5px 0;
+    width: 100%;
+    text-align: left;
+}
+
+/* Instructions Modal */
+#ar-instructions {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 500px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 10px;
+    z-index: 100;
+    display: none;
+    text-align: center;
+}
+
+#ar-instructions p {
+    margin-bottom: 20px;
+    font-size: 1.1em;
+}
+
+/* Map Container */
+#map-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    display: none;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #main-menu h1 {
+        font-size: 2em;
+    }
+
+    #main-menu button {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+
+    #ar-ui {
+        width: 90%;
+        bottom: 10px;
+    }
+}
