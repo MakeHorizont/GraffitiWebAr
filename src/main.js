@@ -1,5 +1,6 @@
 import './style.css';
 import { initUI } from './ui.js';
+import 'showdown';
 
 class VestigiumApp {
     constructor() {
@@ -27,10 +28,14 @@ class VestigiumApp {
     async initDID() {
         const { DidKey } = DidKeyWebCrypto;
         const didKey = new DidKey();
-        const storedDid = localStorage.getItem('userDid');
-        if (storedDid) {
-            this.userDid = await didKey.fromDid(storedDid);
+        const rememberedDid = localStorage.getItem('rememberedDid');
+        if (rememberedDid) {
+            this.userDid = await didKey.fromDid(rememberedDid);
         } else {
+            const storedDid = localStorage.getItem('userDid');
+            if (storedDid) {
+                this.userDid = await didKey.fromDid(storedDid);
+            } else {
             this.userDid = await didKey.generate();
             localStorage.setItem('userDid', this.userDid.did);
             localStorage.setItem('privateKey', JSON.stringify(await this.userDid.export({
@@ -61,17 +66,29 @@ class VestigiumApp {
         });
     }
 
-    startGuestMode() {
+    async startGuestMode() {
         console.log('Starting in Guest Mode');
-        // In guest mode, we don't need to do anything special yet.
-        // The user can view public content, but not create new content.
+        await this.initDID();
+        return this.userDid.id;
     }
 
-    createAccountWithFile() {
-        // This would involve creating a new DID and saving it to a file.
-        // For now, we'll just log a message.
-        console.log('Creating account with file...');
-        alert('Account creation with file is not fully implemented yet.');
+    rememberUser() {
+        localStorage.setItem('rememberedDid', this.userDid.did);
+    }
+
+    async createAccountWithFile() {
+        await this.initDID();
+        const privateKey = await this.userDid.export({
+            type: 'JsonWebKey2020',
+            privateKey: true
+        });
+        const blob = new Blob([JSON.stringify(privateKey)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'vestigium_key.json';
+        a.click();
+        URL.revokeObjectURL(url);
     }
 
     loginWithFile(file) {
