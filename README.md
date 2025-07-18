@@ -14,14 +14,33 @@ Vestigium is a WebAR application that allows users to place digital content (tex
 
 ## Getting Started
 
-1.  **Open the application:** Navigate to the application's URL in your mobile web browser.
-2.  **Choose your mode:**
-    *   **Guest Mode:** Explore public content without creating an account.
-    *   **Create Account:** Generate a new decentralized identity (DID) to create and manage your own content.
-    *   **Login:** Restore your existing identity.
-3.  **Start Exploring:** Press the "Start" button to enter the AR mode.
-4.  **Discover Content:** Move your phone around to find digital traces left by other users.
-5.  **Create Your Own Traces:** Use the "Select Object" menu to place your own content in the world.
+To get a local copy up and running, follow these simple steps.
+
+### Prerequisites
+
+*   npm
+    ```sh
+    npm install npm@latest -g
+    ```
+
+### Installation
+
+1.  Clone the repo
+    ```sh
+    git clone https://github.com/your_username_/repo_name.git
+    ```
+2.  Install NPM packages
+    ```sh
+    npm install
+    ```
+3.  Run the development server
+    ```sh
+    npm run dev
+    ```
+4.  Build for production
+    ```sh
+    npm run build
+    ```
 
 ## Contributing
 

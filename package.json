@@ -4,8 +4,9 @@
   "description": "Decentralized AR platform",
   "main": "src/main.js",
   "scripts": {
-    "start": "npx http-server .",
-    "build": "mkdir -p build && cp -r public/* build/"
+    "dev": "vite",
+    "build": "vite build",
+    "start": "npx http-server build"
   },
   "keywords": [
     "AR",
@@ -28,6 +29,7 @@
     "http-server": "^14.1.1",
     "jest": "^30.0.4",
     "jest-environment-jsdom": "^30.0.4",
-    "jsdom": "^26.1.0"
+    "jsdom": "^26.1.0",
+    "vite": "^7.0.5"
   }
 }

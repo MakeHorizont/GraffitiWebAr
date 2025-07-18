@@ -1,3 +1,4 @@
+import './style.css';
 import { initUI } from './ui.js';
 
 class VestigiumApp {
