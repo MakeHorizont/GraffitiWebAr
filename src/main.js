@@ -109,6 +109,33 @@ class VestigiumApp {
         }
     }
 
+    async saveTrace(content, type, position, scale, rotation, visibility, audio) {
+        const trace = {
+            content,
+            type,
+            position,
+            scale,
+            rotation,
+            visibility,
+            audio,
+            author: this.userDid.id,
+            timestamp: Date.now()
+        };
+
+        if (type !== 'text') {
+            const fileResult = await this.ipfs.add(content);
+            trace.cid = fileResult.cid.toString();
+        }
+
+        if (audio) {
+            const audioResult = await this.ipfs.add(audio);
+            trace.audioCid = audioResult.cid.toString();
+        }
+
+        await this.db.put(trace.timestamp.toString(), trace);
+        console.log('Trace saved:', trace);
+    }
+
     async loadARObjects() {
         const bounds = this.map.getBounds();
         const all = await this.db.all();
