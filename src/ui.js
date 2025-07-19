@@ -25,6 +25,7 @@ export function initUI(app) {
     const closeCreateTraceModalButton = createTraceModal.querySelector('.close-button');
 
     arExitButton.addEventListener('click', () => {
+        console.log('arExitButton clicked');
         arContainer.classList.add('hidden');
         arUi.classList.add('hidden');
         mainMenu.classList.remove('hidden');
@@ -36,19 +37,23 @@ export function initUI(app) {
     const closeReviewTracesModalButton = reviewTracesModal.querySelector('.close-button');
 
     arCreateTraceButton.addEventListener('click', () => {
+        console.log('arCreateTraceButton clicked');
         createTraceModal.classList.remove('hidden');
     });
 
     closeCreateTraceModalButton.addEventListener('click', () => {
+        console.log('closeCreateTraceModalButton clicked');
         createTraceModal.classList.add('hidden');
     });
 
     arReviewTracesButton.addEventListener('click', () => {
+        console.log('arReviewTracesButton clicked');
         // Add logic to load and display traces here
         reviewTracesModal.classList.remove('hidden');
     });
 
     closeReviewTracesModalButton.addEventListener('click', () => {
+        console.log('closeReviewTracesModalButton clicked');
         reviewTracesModal.classList.add('hidden');
     });
     const accountModal = document.getElementById('account-modal');
@@ -60,20 +65,24 @@ export function initUI(app) {
     const uploadKeyFileButton = document.getElementById('upload-key-file-button');
 
     accountButton.addEventListener('click', () => {
+        console.log('accountButton clicked');
         accountModal.classList.remove('hidden');
     });
 
     closeButton.addEventListener('click', () => {
+        console.log('closeButton clicked');
         accountModal.classList.add('hidden');
     });
 
     window.addEventListener('click', (event) => {
         if (event.target == accountModal) {
+            console.log('window clicked on accountModal');
             accountModal.classList.add('hidden');
         }
     });
 
     guestModeButtonModal.addEventListener('click', async () => {
+        console.log('guestModeButtonModal clicked');
         const did = await app.startGuestMode();
         guestDid.textContent = did;
         startButton.disabled = false;
@@ -81,17 +90,20 @@ export function initUI(app) {
     });
 
     rememberMeButton.addEventListener('click', () => {
+        console.log('rememberMeButton clicked');
         app.rememberUser();
         alert('Ваш гостевой аккаунт сохранен в браузере.');
     });
 
     createKeyFileButton.addEventListener('click', async () => {
+        console.log('createKeyFileButton clicked');
         await app.createAccountWithFile();
         startButton.disabled = false;
         accountModal.style.display = 'none';
     });
 
     uploadKeyFileButton.addEventListener('click', () => {
+        console.log('uploadKeyFileButton clicked');
         loginFileInput.click();
     });
 
@@ -132,12 +144,14 @@ export function initUI(app) {
     }
 
     startButton.addEventListener('click', () => {
+        console.log('startButton clicked');
         mainMenu.classList.add('fade-out');
         arInstructions.classList.remove('hidden');
         arInstructions.classList.add('fade-in');
     });
 
     closeInstructionsButton.addEventListener('click', () => {
+        console.log('closeInstructionsButton clicked');
         arInstructions.classList.remove('fade-in');
         arInstructions.classList.add('fade-out');
         setTimeout(() => {
@@ -153,19 +167,23 @@ export function initUI(app) {
     const cancelSettingsButton = document.getElementById('cancel-settings-button');
 
     settingsButton.addEventListener('click', () => {
+        console.log('settingsButton clicked');
         settingsModal.classList.remove('hidden');
     });
 
     closeSettingsButton.addEventListener('click', () => {
+        console.log('closeSettingsButton clicked');
         settingsModal.classList.add('hidden');
     });
 
     saveSettingsButton.addEventListener('click', () => {
+        console.log('saveSettingsButton clicked');
         // Add logic to save settings here
         settingsModal.classList.add('hidden');
     });
 
     cancelSettingsButton.addEventListener('click', () => {
+        console.log('cancelSettingsButton clicked');
         settingsModal.classList.add('hidden');
     });
 
@@ -180,6 +198,7 @@ export function initUI(app) {
     const closeInstructionsModalButton = instructionsModal.querySelector('.close-button');
 
     instructionsButton.addEventListener('click', async () => {
+        console.log('instructionsButton clicked');
         const response = await fetch('/USER_GUIDE.md');
         const markdown = await response.text();
         const converter = new showdown.Converter();
@@ -188,6 +207,7 @@ export function initUI(app) {
     });
 
     closeInstructionsModalButton.addEventListener('click', () => {
+        console.log('closeInstructionsModalButton clicked');
         instructionsModal.classList.add('hidden');
     });
 
@@ -195,10 +215,12 @@ export function initUI(app) {
     const closeProjectsModalButton = projectsModal.querySelector('.close-button');
 
     projectsButton.addEventListener('click', () => {
+        console.log('projectsButton clicked');
         projectsModal.classList.remove('hidden');
     });
 
     closeProjectsModalButton.addEventListener('click', () => {
+        console.log('closeProjectsModalButton clicked');
         projectsModal.classList.add('hidden');
     });
 }
