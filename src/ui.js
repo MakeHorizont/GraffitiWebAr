@@ -19,11 +19,40 @@ export function initUI(app) {
     const arObjectMenu = document.getElementById('ar-object-menu');
 
     // Event Listeners
-    arSelectObjectButton.addEventListener('click', () => {
-        arObjectMenu.style.display = arObjectMenu.style.display === 'none' ? 'block' : 'none';
+    const arExitButton = document.getElementById('ar-exit-button');
+    const arCreateTraceButton = document.getElementById('ar-create-trace-button');
+    const createTraceModal = document.getElementById('create-trace-modal');
+    const closeCreateTraceModalButton = createTraceModal.querySelector('.close-button');
+
+    arExitButton.addEventListener('click', () => {
+        arContainer.classList.add('hidden');
+        arUi.classList.add('hidden');
+        mainMenu.classList.remove('hidden');
+        mainMenu.classList.remove('fade-out');
+    });
+
+    const arReviewTracesButton = document.getElementById('ar-review-traces-button');
+    const reviewTracesModal = document.getElementById('review-traces-modal');
+    const closeReviewTracesModalButton = reviewTracesModal.querySelector('.close-button');
+
+    arCreateTraceButton.addEventListener('click', () => {
+        createTraceModal.classList.remove('hidden');
+    });
+
+    closeCreateTraceModalButton.addEventListener('click', () => {
+        createTraceModal.classList.add('hidden');
+    });
+
+    arReviewTracesButton.addEventListener('click', () => {
+        // Add logic to load and display traces here
+        reviewTracesModal.classList.remove('hidden');
+    });
+
+    closeReviewTracesModalButton.addEventListener('click', () => {
+        reviewTracesModal.classList.add('hidden');
     });
     const accountModal = document.getElementById('account-modal');
-    const closeButton = document.querySelector('.close-button');
+    const closeButton = accountModal.querySelector('.close-button');
     const guestModeButtonModal = document.getElementById('guest-mode-button-modal');
     const guestDid = document.getElementById('guest-did');
     const rememberMeButton = document.getElementById('remember-me-button');
@@ -31,16 +60,16 @@ export function initUI(app) {
     const uploadKeyFileButton = document.getElementById('upload-key-file-button');
 
     accountButton.addEventListener('click', () => {
-        accountModal.style.display = 'block';
+        accountModal.classList.remove('hidden');
     });
 
     closeButton.addEventListener('click', () => {
-        accountModal.style.display = 'none';
+        accountModal.classList.add('hidden');
     });
 
     window.addEventListener('click', (event) => {
         if (event.target == accountModal) {
-            accountModal.style.display = 'none';
+            accountModal.classList.add('hidden');
         }
     });
 
@@ -48,7 +77,7 @@ export function initUI(app) {
         const did = await app.startGuestMode();
         guestDid.textContent = did;
         startButton.disabled = false;
-        accountModal.style.display = 'none';
+        accountModal.classList.add('hidden');
     });
 
     rememberMeButton.addEventListener('click', () => {
@@ -91,9 +120,20 @@ export function initUI(app) {
         }
     });
 
+    function showMainMenu() {
+        mainMenu.classList.remove('hidden');
+        arUi.classList.add('hidden');
+    }
+
+    function showAR() {
+        mainMenu.classList.add('hidden');
+        arUi.classList.remove('hidden');
+        arContainer.classList.remove('hidden');
+    }
+
     startButton.addEventListener('click', () => {
         mainMenu.classList.add('fade-out');
-        arInstructions.style.display = 'block';
+        arInstructions.classList.remove('hidden');
         arInstructions.classList.add('fade-in');
     });
 
@@ -101,8 +141,8 @@ export function initUI(app) {
         arInstructions.classList.remove('fade-in');
         arInstructions.classList.add('fade-out');
         setTimeout(() => {
-            arContainer.style.display = 'block';
-            arUi.style.display = 'flex';
+            arInstructions.classList.add('hidden');
+            showAR();
             app.startAR();
         }, 500);
     });
@@ -113,20 +153,20 @@ export function initUI(app) {
     const cancelSettingsButton = document.getElementById('cancel-settings-button');
 
     settingsButton.addEventListener('click', () => {
-        settingsModal.style.display = 'block';
+        settingsModal.classList.remove('hidden');
     });
 
     closeSettingsButton.addEventListener('click', () => {
-        settingsModal.style.display = 'none';
+        settingsModal.classList.add('hidden');
     });
 
     saveSettingsButton.addEventListener('click', () => {
         // Add logic to save settings here
-        settingsModal.style.display = 'none';
+        settingsModal.classList.add('hidden');
     });
 
     cancelSettingsButton.addEventListener('click', () => {
-        settingsModal.style.display = 'none';
+        settingsModal.classList.add('hidden');
     });
 
     vrButton.addEventListener('click', () => {
@@ -144,14 +184,21 @@ export function initUI(app) {
         const markdown = await response.text();
         const converter = new showdown.Converter();
         instructionsContent.innerHTML = converter.makeHtml(markdown);
-        instructionsModal.style.display = 'block';
+        instructionsModal.classList.remove('hidden');
     });
 
     closeInstructionsModalButton.addEventListener('click', () => {
-        instructionsModal.style.display = 'none';
+        instructionsModal.classList.add('hidden');
     });
 
+    const projectsModal = document.getElementById('projects-modal');
+    const closeProjectsModalButton = projectsModal.querySelector('.close-button');
+
     projectsButton.addEventListener('click', () => {
-        window.open('https://github.com/ten-tools-of-the-new-world', '_blank');
+        projectsModal.classList.remove('hidden');
+    });
+
+    closeProjectsModalButton.addEventListener('click', () => {
+        projectsModal.classList.add('hidden');
     });
 }
