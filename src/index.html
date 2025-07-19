@@ -17,13 +17,8 @@
     <div id="app-container">
         <!-- Main Menu -->
         <div id="main-menu">
+            <img src="/logo.png" alt="Logo" id="logo">
             <h1>След / Vestigium / 迹 (Jì)</h1>
-            <div id="account-creation-container">
-                <button id="guest-mode-button">Гостевой режим</button>
-                <button id="create-account-file-button">Создать аккаунт (файл-ключ)</button>
-                <input type="file" id="login-file-input" style="display: none;" />
-                <button id="login-file-button">Войти по файлу</button>
-            </div>
             <button id="start-button" disabled>Старт</button>
             <button id="account-button">Создание аккаунта</button>
             <button id="settings-button">Настройки</button>
@@ -33,17 +28,19 @@
         </div>
 
         <!-- Account Modal -->
-        <div id="account-modal" class="modal">
+        <div id="account-modal" class="modal hidden">
             <div class="modal-content">
                 <span class="close-button">&times;</span>
-                <h2>Создание аккаунта</h2>
-                <button id="guest-mode-button-modal">Гостевой режим / Временный аккаунт</button>
-                <p>Вы вошли как гость (DID: <span id="guest-did"></span>)</p>
+                <h2>Аккаунт</h2>
+                <h3>Гостевой режим</h3>
+                <p>Вы вошли как гость (Ваш временный ID: <span id="guest-did"></span>)</p>
+                <button id="guest-mode-button-modal">Войти как гость</button>
                 <button id="remember-me-button">Запомнить меня</button>
                 <hr>
                 <h3>Вход / Создание через файл-ключ</h3>
                 <button id="create-key-file-button">Скачать файл-ключ</button>
                 <button id="upload-key-file-button">Загрузить файл-ключ</button>
+                <button id="attach-key-file-button" disabled>Привязать файл-ключ к почте/облаку</button>
                 <hr>
                 <h3>Другие способы входа</h3>
                 <button disabled>Вход через почту (в разработке)</button>
@@ -52,27 +49,57 @@
         </div>
 
         <!-- Settings Modal -->
-        <div id="settings-modal" class="modal">
+        <div id="settings-modal" class="modal hidden">
             <div class="modal-content">
                 <span class="close-button">&times;</span>
                 <h2>Настройки</h2>
+                <h3>Общие</h3>
                 <label for="language-select">Язык:</label>
                 <select id="language-select">
                     <option>Русский</option>
                 </select>
-                <br>
-                <label for="ar-quality-select">Качество AR:</label>
-                <select id="ar-quality-select">
-                    <option>Среднее</option>
+                <label for="theme-select">Тема оформления:</label>
+                <select id="theme-select">
+                    <option>Темная</option>
                 </select>
-                <br>
-                <button id="save-settings-button">Сохранить</button>
+                <h3>AR</h3>
+                <label for="ar-quality-select">Качество AR-рендеринга:</label>
+                <select id="ar-quality-select">
+                    <option>Низкое</option>
+                    <option selected>Среднее</option>
+                    <option>Высокое</option>
+                </select>
+                <label for="show-object-labels-checkbox">Отображать метки объектов:</label>
+                <input type="checkbox" id="show-object-labels-checkbox" checked>
+                <h3>Децентрализация</h3>
+                <p>Статус пиннинг-узла: <span id="pinning-node-status">Не подключен</span></p>
+                <button id="save-settings-button">Сохранить изменения</button>
                 <button id="cancel-settings-button">Отмена</button>
             </div>
         </div>
 
+        <!-- Projects Modal -->
+        <div id="projects-modal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2>Проекты Нового Мира</h2>
+                <ul>
+                    <li><a href="#" target="_blank">Праксис / Praxis / 实践 (Shíjiàn)</a></li>
+                    <li><a href="#" target="_blank">Очаг / Locus / 灶 (Zào)</a></li>
+                    <li><a href="#" target="_blank">Исток / Origo / 源 (Yuán)</a></li>
+                    <li><a href="#" target="_blank">Аргумент / Argumentum / 论 (Lùn)</a></li>
+                    <li><a href="#" target="_blank">Сигнал / Signum / 信号 (Xìnhào)</a></li>
+                    <li><a href="#" target="_blank">Мера / Mensura / 度 (Dù)</a></li>
+                    <li><a href="#" target="_blank">Память / Memoria / 忆 (Yì)</a></li>
+                    <li><a href="#" target="_blank">Мост / Pons / 桥 (Qiáo)</a></li>
+                    <li><a href="#" target="_blank">Здоровье / Salus / 康 (Kāng)</a></li>
+                    <li><a href="#" target="_blank">Игра / Ludus / 玩 (Wán)</a></li>
+                </ul>
+            </div>
+        </div>
+
         <!-- Instructions Modal -->
-        <div id="instructions-modal" class="modal">
+        <div id="instructions-modal" class="modal hidden">
             <div class="modal-content">
                 <span class="close-button">&times;</span>
                 <div id="instructions-content"></div>
@@ -86,7 +113,7 @@
         </div>
 
         <!-- AR Container -->
-        <div id="ar-container">
+        <div id="ar-container" class="hidden">
             <a-scene webxr="requiredFeatures: hit-test,local-floor; optionalFeatures: dom-overlay,unbounded; overlayElement: #overlay;">
                 <a-assets>
                     <img id="image-marker" src="models/marker.png">
@@ -99,17 +126,49 @@
         </div>
 
         <!-- AR UI -->
-        <div id="ar-ui">
-            <button id="ar-menu-button">Меню</button>
-            <button id="ar-photo-button">Фотографировать место</button>
-            <button id="ar-select-object-button">Выбор объекта</button>
-            <div id="ar-object-menu" style="display: none;">
+        <div id="ar-ui" class="hidden">
+            <button id="ar-exit-button">Меню</button>
+            <button id="ar-create-trace-button">Создать след</button>
+            <button id="ar-review-traces-button">Обзор следов</button>
+        </div>
+
+        <!-- Create Trace Modal -->
+        <div id="create-trace-modal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2>Создать След</h2>
+                <h3>Выберите тип контента</h3>
                 <button data-type="text">Текст</button>
                 <button data-type="image">Изображение</button>
                 <button data-type="video">Видео</button>
                 <button data-type="model">3D-модель</button>
                 <button data-type="animated-model">Анимированная 3D-модель</button>
-                <input type="file" id="ar-audio-input" accept="audio/*" />
+                <hr>
+                <div id="content-input-container"></div>
+                <hr>
+                <label for="attach-audio-input">Прикрепить звук:</label>
+                <input type="file" id="attach-audio-input" accept="audio/*">
+                <hr>
+                <h3>Инструменты позиционирования</h3>
+                <!-- Add positioning tools here -->
+                <hr>
+                <h3>Видимость</h3>
+                <select id="visibility-select">
+                    <option value="private">Только я</option>
+                    <option value="friends">Друзья</option>
+                    <option value="public">Все</option>
+                </select>
+                <hr>
+                <button id="save-trace-button">Сохранить След</button>
+            </div>
+        </div>
+
+        <!-- Review Traces Modal -->
+        <div id="review-traces-modal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2>Обзор Следов Поблизости</h2>
+                <div id="traces-list"></div>
             </div>
         </div>
 

@@ -1,62 +1,62 @@
 # След / Vestigium / 迹 (Jì)
 
-**A decentralized augmented reality platform for leaving and discovering digital traces in the real world.**
+**Децентрализованная платформа дополненной реальности для оставления и обнаружения цифровых следов в реальном мире.**
 
-Vestigium is a WebAR application that allows users to place digital content (text, images, 3D models) at specific geographic locations. This content can then be discovered by other users through the AR interface. The platform is built on decentralized technologies like IPFS and OrbitDB, ensuring that the data is censorship-resistant and user-owned.
+Vestigium - это WebAR-приложение, которое позволяет пользователям размещать цифровой контент (текст, изображения, 3D-модели) в определенных географических точках. Этот контент затем может быть обнаружен другими пользователями через интерфейс AR. Платформа построена на децентрализованных технологиях, таких как IPFS и OrbitDB, что обеспечивает устойчивость к цензуре и принадлежность данных пользователю.
 
-## Features
+## Функции
 
-*   **Decentralized:** All content is stored on IPFS and OrbitDB, giving users full control over their data.
-*   **Augmented Reality:** Discover and place digital content in the real world through your smartphone's camera.
-*   **Geolocation:** Content is tied to specific geographic coordinates, creating a location-based experience.
-*   **Cross-Platform:** As a web application, Vestigium runs on any modern smartphone with a web browser and camera access.
-*   **User-Friendly Interface:** A clean, responsive, and intuitive interface designed for a seamless user experience.
+*   **Децентрализация:** Весь контент хранится на IPFS и OrbitDB, что дает пользователям полный контроль над своими данными.
+*   **Дополненная реальность:** Находите и размещайте цифровой контент в реальном мире с помощью камеры вашего смартфона.
+*   **Геолокация:** Контент привязан к определенным географическим координатам, что создает опыт, основанный на местоположении.
+*   **Кросс-платформенность:** Будучи веб-приложением, Vestigium работает на любом современном смартфоне с веб-браузером и доступом к камере.
+*   **Дружественный интерфейс:** Чистый, отзывчивый и интуитивно понятный интерфейс, разработанный для безупречного пользовательского опыта.
 
-## Getting Started
+## Начало работы
 
-1.  **Open the application:** Navigate to the application's URL in your mobile web browser.
-2.  **Choose your mode:**
-    *   **Guest Mode:** Explore public content without creating an account.
-    *   **Create Account:** Generate a new decentralized identity (DID) to create and manage your own content.
-    *   **Login:** Restore your existing identity.
-3.  **Start Exploring:** Press the "Start" button to enter the AR mode.
-4.  **Discover Content:** Move your phone around to find digital traces left by other users.
-5.  **Create Your Own Traces:** Use the "Select Object" menu to place your own content in the world.
+1.  **Откройте приложение:** Перейдите по URL-адресу приложения в вашем мобильном веб-браузере.
+2.  **Выберите режим:**
+    *   **Гостевой режим:** Исследуйте общедоступный контент без создания учетной записи.
+    *   **Создать учетную запись:** Создайте новую децентрализованную идентификацию (DID) для создания и управления собственным контентом.
+    *   **Войти:** Восстановите существующую идентификацию.
+3.  **Начните исследование:** Нажмите кнопку "Старт", чтобы войти в режим AR.
+4.  **Находите контент:** Перемещайте телефон, чтобы найти цифровые следы, оставленные другими пользователями.
+5.  **Создавайте свои собственные следы:** Используйте меню "Создать след" для размещения собственного контента в мире.
 
-## Development
+## Разработка
 
-To get a local copy up and running, follow these simple steps.
+Чтобы получить локальную копию и запустить ее, выполните следующие простые шаги.
 
-### Prerequisites
+### Предварительные условия
 
 *   npm
     ```sh
     npm install npm@latest -g
     ```
 
-### Installation
+### Установка
 
-1.  Clone the repo
+1.  Клонируйте репозиторий
     ```sh
     git clone https://github.com/your_username_/repo_name.git
     ```
-2.  Install NPM packages
+2.  Установите пакеты NPM
     ```sh
     npm install
     ```
-3.  Run the development server
+3.  Запустите сервер разработки
     ```sh
     npm run dev
     ```
-4.  Build for production
+4.  Сборка для продакшена
     ```sh
     npm run build
     ```
 
-## Contributing
+## Участие
 
-We welcome contributions from the community! Please see our [Contributing Guidelines](CONTRIBUTING.md) for more information on how to get involved.
+Мы приветствуем вклад сообщества! Пожалуйста, ознакомьтесь с нашим [Руководством для участников](CONTRIBUTING.md) для получения дополнительной информации о том, как принять участие.
 
-## License
+## Лицензия
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Этот проект лицензирован по лицензии MIT - подробности см. в файле [LICENSE](LICENSE).
