@@ -41,8 +41,33 @@ export function initUI(app) {
         createTraceModal.classList.remove('hidden');
     });
 
+    const saveTraceButton = document.getElementById('save-trace-button');
+
     closeCreateTraceModalButton.addEventListener('click', () => {
         console.log('closeCreateTraceModalButton clicked');
+        createTraceModal.classList.add('hidden');
+    });
+
+    saveTraceButton.addEventListener('click', () => {
+        console.log('saveTraceButton clicked');
+        const contentInput = contentInputContainer.querySelector('input, textarea');
+        const visibility = document.getElementById('visibility-select').value;
+        const audioInput = document.getElementById('attach-audio-input');
+        const audio = audioInput.files[0];
+
+        let content;
+        if (selectedContentType === 'text') {
+            content = contentInput.value;
+        } else {
+            content = contentInput.files[0];
+        }
+
+        // Get position, scale, and rotation from AR scene
+        const position = { x: 0, y: 0, z: -2 };
+        const scale = { x: 1, y: 1, z: 1 };
+        const rotation = { x: 0, y: 0, z: 0 };
+
+        app.saveTrace(content, selectedContentType, position, scale, rotation, visibility, audio);
         createTraceModal.classList.add('hidden');
     });
 
@@ -193,7 +218,30 @@ export function initUI(app) {
         featureInDevelopmentModal.classList.remove('hidden');
     });
 
+    const contentInputContainer = document.getElementById('content-input-container');
+
+    let selectedContentType = null;
+    createTraceModal.querySelectorAll('[data-type]').forEach(button => {
+        button.addEventListener('click', () => {
+            console.log('content type button clicked');
+            selectedContentType = button.dataset.type;
+            contentInputContainer.innerHTML = '';
+            switch (selectedContentType) {
+                case 'text':
+                    contentInputContainer.innerHTML = '<textarea placeholder="Введите текст"></textarea>';
+                    break;
+                case 'image':
+                case 'video':
+                case 'model':
+                case 'animated-model':
+                    contentInputContainer.innerHTML = '<input type="file">';
+                    break;
+            }
+        });
+    });
+
     closeFeatureInDevelopmentModalButton.addEventListener('click', () => {
+        console.log('closeCreateTraceModalButton clicked');
         featureInDevelopmentModal.classList.add('hidden');
     });
 
