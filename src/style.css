@@ -19,7 +19,7 @@ body {
 #main-menu {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     height: 100%;
     background: rgba(0, 0, 0, 0.7);
@@ -31,16 +31,29 @@ body {
     top: 0;
     left: 0;
     width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#main-menu-header {
+    display: flex;
+    align-items: center;
 }
 
 #logo {
-    width: 150px;
-    margin-bottom: 20px;
+    width: 50px;
+    margin-right: 20px;
 }
 
 #main-menu h1 {
-    font-size: 3em;
-    margin-bottom: 40px;
+    font-size: 2em;
+    margin: 0;
+}
+
+#main-menu-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #main-menu button {
@@ -89,16 +102,41 @@ body {
 /* AR UI */
 #ar-ui {
     position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    z-index: 110;
+    pointer-events: none;
+}
+
+#ar-ui button {
+    position: absolute;
+    pointer-events: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    padding: 15px;
+    font-size: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#ar-exit-button {
+    top: 20px;
+    left: 20px;
+}
+
+#ar-create-trace-button {
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    display: none;
-    z-index: 110;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-radius: 10px;
-    padding: 10px;
+}
+
+#ar-review-traces-button {
+    bottom: 20px;
+    right: 20px;
 }
 
 #ar-ui button {
@@ -280,7 +318,7 @@ body {
 /* Responsive Design */
 @media (max-width: 768px) {
     #main-menu h1 {
-        font-size: 2em;
+        font-size: 1.5em;
     }
 
     #main-menu button {
@@ -288,8 +326,8 @@ body {
         font-size: 1em;
     }
 
-    #ar-ui {
+    .modal-content {
         width: 90%;
-        bottom: 10px;
+        margin: 20% auto;
     }
 }

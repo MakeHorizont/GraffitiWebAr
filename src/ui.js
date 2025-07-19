@@ -143,22 +143,20 @@ export function initUI(app) {
         arContainer.classList.remove('hidden');
     }
 
+    const cameraInstructionModal = document.getElementById('camera-instruction-modal');
+    const startArButton = document.getElementById('start-ar-button');
+
     startButton.addEventListener('click', () => {
         console.log('startButton clicked');
         mainMenu.classList.add('fade-out');
-        arInstructions.classList.remove('hidden');
-        arInstructions.classList.add('fade-in');
+        cameraInstructionModal.classList.remove('hidden');
     });
 
-    closeInstructionsButton.addEventListener('click', () => {
-        console.log('closeInstructionsButton clicked');
-        arInstructions.classList.remove('fade-in');
-        arInstructions.classList.add('fade-out');
-        setTimeout(() => {
-            arInstructions.classList.add('hidden');
-            showAR();
-            app.startAR();
-        }, 500);
+    startArButton.addEventListener('click', () => {
+        console.log('startArButton clicked');
+        cameraInstructionModal.classList.add('hidden');
+        showAR();
+        app.startAR();
     });
 
     const settingsModal = document.getElementById('settings-modal');
@@ -187,10 +185,16 @@ export function initUI(app) {
         settingsModal.classList.add('hidden');
     });
 
+    const featureInDevelopmentModal = document.getElementById('feature-in-development-modal');
+    const closeFeatureInDevelopmentModalButton = featureInDevelopmentModal.querySelector('.close-button');
+
     vrButton.addEventListener('click', () => {
-        // In a real implementation, this would trigger the VR mode.
-        // For now, we can show an alert or a message.
-        alert('VR mode is not implemented yet.');
+        console.log('vrButton clicked');
+        featureInDevelopmentModal.classList.remove('hidden');
+    });
+
+    closeFeatureInDevelopmentModalButton.addEventListener('click', () => {
+        featureInDevelopmentModal.classList.add('hidden');
     });
 
     const instructionsModal = document.getElementById('instructions-modal');
